@@ -1,41 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import TeamInfo from './TeamInfo'
+import { connect } from 'react-redux';
 
-const iniitalState = {
-  name: 'Lakers',
-  city: 'Los Angeles',
-  roster: {
-      benchPlayers: [
-          {id: 1, name: 'Buddy'},
-          {id: 2, name: 'Demarcus'},
-          {id: 3, name: 'Dwight'},
-          {id: 4, name: 'Markus'},
-          {id: 5, name: 'Rajon'},
-          {id: 6, name: 'Dion'},
-          {id: 7, name: 'Alex'}
-      ],
-      starters: [
-          {id: 8, name: 'Lebron'},
-          {id: 9, name: 'Anthony'},
-          {id: 10, name: 'JaVale'},
-          {id: 11, name: 'Danny'},
-          {id: 12, name: 'Quinn'}
-      ]
-  }
-}
-
-function App() {
+function App(props) {
   return (
     <div className="App">
-      <h1>{iniitalState.name}</h1>
-      <h2>{iniitalState.city}</h2>
-      <TeamInfo
-        benched={iniitalState.roster.benchPlayers}
-        starters={iniitalState.roster.starters}
-      />
+      <h1>{props.name}</h1>
+      <h2>{props.city}</h2>
+      <TeamInfo />
     </div>
   );
 }
 
-export default App;
+// mapStateToProps allows us to subscribe to
+// the slice of state from our redux store
+// that we want to use in our component 
+const mapStateToProps = state => {
+  return {
+    name: state.name,
+    city: state.city
+  }
+}
+
+// connect() is what connects our React component
+// to our Redux store
+export default connect(
+  mapStateToProps,
+  {}
+)(App);
